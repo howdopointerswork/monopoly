@@ -65,6 +65,8 @@ public:
 
   void buyProperty(Property arr[]);
 
+  void checkJail();
+
 
 };
 
@@ -175,6 +177,21 @@ void Player::setCash(int n){
 
 
   cash = n;
+
+  
+}
+
+
+
+
+void Player::checkJail(){
+
+
+  if(pos == 30){
+
+    jail = true;
+    
+  }
 
   
 }
