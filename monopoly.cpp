@@ -23,7 +23,7 @@ public:
 
 	int val;
 
-	bool owned;
+	bool owned = 0;
 
 	int ren; //rent
 
@@ -107,7 +107,7 @@ void Player::roll(Property arr[]){
   }
 
 
-	int d1 = rand() % (6+1-1) + 1;
+	int d1 = rand() % (6+1-1) + 1; 
 	int d2 = rand() % (6+1-1) + 1;
 
 	int sum = d1+d2;
@@ -208,7 +208,7 @@ void Player::buyProperty(Property arr[]){
 
   int i = 0;
   
-  if(arr[pos].owned == 0 && arr[pos].val > -1){
+  if(arr[pos].owned == 0 && arr[pos].val > 0 && cash >= arr[pos].val){
 
     while(owned[i].name != "None"){
 
@@ -277,6 +277,7 @@ int main(){
 
  me.roll(p);
  me.buyProperty(p); //refactor into roll so that property may be purchased upon rolling doubles
+cout << me.owned[0].name << endl;
 
 
 	return 0;
