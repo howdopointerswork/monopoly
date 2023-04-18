@@ -55,13 +55,15 @@ public:
 
 	Player();
 
-	void roll();
+	void roll(Property arr[]);
 
   void addCash(int n);
 
   void remCash(int n);
 
   void setCash(int n);
+
+  void buyProperty(Property arr[]);
 
 
 };
@@ -93,7 +95,7 @@ Player::Player(){
 
 
 
-void Player::roll(){
+void Player::roll(Property arr[]){
 
 
   if(doubleCount == 3){
@@ -112,7 +114,7 @@ void Player::roll(){
 	int hold = pos + sum;
 
 	cout << "Rolled a " << sum << ", with a " << d1 << " and a " << d2 << endl;
-		
+	
 	if(hold > 39){ //fix
 
 		int diff = hold - 39;
@@ -122,16 +124,20 @@ void Player::roll(){
 
 	pos += sum;
 
+  cout << "You landed on: " << arr[pos].name << endl;
 
 
-	//handle doubles here;
-
-if(d1 == d2){
 
 
- doubleCount++;
 
-roll();
+
+
+ if(d1 == d2){
+
+
+  doubleCount++;
+
+  roll(arr);
 
 
   
@@ -197,6 +203,38 @@ Property* makeProperty(Property* p, string n, int v, int r, int m){
 
 
 
+void Player::buyProperty(Property arr[]){
+
+
+  int i = 0;
+  
+  if(arr[pos].owned == 0 && arr[pos].val > -1){
+
+    while(owned[i].name != "None"){
+
+      i++;
+
+
+       
+    }
+
+    owned[i] = arr[pos];
+    cash -= arr[pos].val;
+    cout << "You purchased " << owned[i].name << " for " << owned[i].val << ". You now have " << cash << endl;
+
+    
+  }
+  else{
+
+    cout << "Property could not be purchased. Either it is already owned or you are attempting to purchase a special space such as Chance" << endl;
+  }
+
+  
+}
+
+
+
+
 
 
 int main(){
@@ -215,8 +253,13 @@ int main(){
   int boardMortgages[40] = {-1, 30, -1, 30, -1, 100, 50, -1, 50, 60, -1, 70, 75, 70, 80, 100, 90, -1, 90, 100, -1, 110, -1, 110, 120, 100, 130, 130, 75, 140, -1, 150, 150, -1, 160, 100, -1, 175, -1, 200};
 
   Property* p;
+  Property* o;
+
+  Player me;
+  me.name = "Dev";
 
   p = board;
+  o = me.owned;
 
 
 	for(int i=0; i<40; i++){
@@ -228,10 +271,12 @@ int main(){
 
 	}
 
+  p = board;
+
   
 
-cout << "Testing" << endl;
-//testing changes for mobile device
+ me.roll(p);
+ me.buyProperty(p); //refactor into roll so that property may be purchased upon rolling doubles
 
 
 	return 0;
