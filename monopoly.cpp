@@ -51,11 +51,17 @@ public:
 
 	Property owned[28];
 
-	int doubleCount;
+	int doubleCount = 0;
 
 	Player();
 
 	void roll();
+
+  void addCash(int n);
+
+  void remCash(int n);
+
+  void setCash(int n);
 
 
 };
@@ -74,12 +80,29 @@ Player::Player(){
 
 	name = "None";
 
+  for(int i=0; i<28; i++){
+
+    owned[i].name = "None";
+
+    
+  }
+
 
 }
 
 
 
+
 void Player::roll(){
+
+
+  if(doubleCount == 3){
+
+    jail = true;
+
+    return;
+    
+  }
 
 
 	int d1 = rand() % (6+1-1) + 1;
@@ -90,7 +113,7 @@ void Player::roll(){
 
 	cout << "Rolled a " << sum << ", with a " << d1 << " and a " << d2 << endl;
 		
-	if(hold > 39){
+	if(hold > 39){ //fix
 
 		int diff = hold - 39;
 		pos = diff; 
@@ -102,11 +125,56 @@ void Player::roll(){
 
 
 	//handle doubles here;
+
+if(d1 == d2){
+
+
+ doubleCount++;
+
+roll();
+
+
+  
+}
 		
 
 
 
 }
+
+
+
+
+void Player::addCash(int n){
+
+
+  cash += n;
+  
+}
+
+
+
+
+void Player::remCash(int n){
+
+
+  cash -= n;
+  
+}
+
+
+
+
+void Player::setCash(int n){
+
+
+  cash = n;
+
+  
+}
+
+
+
 
 
 Property* makeProperty(Property* p, string n, int v, int r, int m){
