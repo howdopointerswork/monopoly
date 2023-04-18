@@ -57,6 +57,12 @@ public:
 
 	void roll();
 
+  void addCash(int n);
+
+  void remCash(int n);
+
+  void setCash(int n);
+
 
 };
 
@@ -76,6 +82,7 @@ Player::Player(){
 
 
 }
+
 
 
 
@@ -107,6 +114,40 @@ void Player::roll(){
 
 
 }
+
+
+
+
+void Player::addCash(int n){
+
+
+  cash += n;
+  
+}
+
+
+
+
+void Player::remCash(int n){
+
+
+  cash -= n;
+  
+}
+
+
+
+
+void Player::setCash(int n){
+
+
+  cash = n;
+
+  
+}
+
+
+
 
 
 Property* makeProperty(Property* p, string n, int v, int r, int m){
