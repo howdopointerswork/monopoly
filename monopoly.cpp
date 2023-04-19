@@ -29,7 +29,7 @@ public:
 
 	int mtg; //mortgage
 
-  Property();
+ 	Property();
 
 
 private:
@@ -59,31 +59,31 @@ public:
 
 	void roll(Property arr[]);
 
-  void addCash(int n);
+  	void addCash(int n);
 
-  void remCash(int n);
+  	void remCash(int n);
 
-  void setCash(int n);
+ 	void setCash(int n);
 
-  void buyProperty(Property arr[]);
+  	void buyProperty(Property arr[]);
 
-  void checkJail();
+  	void checkJail();
 
-  void checkLT();
+  	void checkLT();
 
-  void checkIT();
+  	void checkIT();
 
-  void checkRent(Property arr[]); //first check owned array, then check if bool is owned in general. if so, pay
+  	void checkRent(Property arr[]); //first check owned array, then check if bool is owned in general. if so, pay
 
-  void checks(Property arr[]);
-
-
-
-};
+  	void checks(Property arr[]);
 
 
 
-Property::Property(){
+	};
+
+
+
+ Property::Property(){
 
 
 
@@ -135,24 +135,24 @@ void Player::roll(Property arr[]){
   }
 
 
-	int d1 = rand() % (6+1-1) + 1; 
-	int d2 = rand() % (6+1-1) + 1;
+  int d1 = rand() % (6+1-1) + 1; 
+  int d2 = rand() % (6+1-1) + 1;
 
-	int sum = d1+d2;
-	int hold = pos + sum;
+  int sum = d1+d2;
+  int hold = pos + sum;
 
-	cout << "Rolled a " << sum << ", with a " << d1 << " and a " << d2 << endl;
+  cout << "Rolled a " << sum << ", with a " << d1 << " and a " << d2 << endl;
 	
-	if(hold > 39){ 
+  if(hold > 39){ 
 
-		int diff = hold - 40; 
-		pos = diff; 
+    int diff = hold - 40; 
+    pos = diff; 
     cash += 200; //Go
     
-	}
+  }
   else{
 
-	pos += sum;
+    pos += sum;
 
   }
 
