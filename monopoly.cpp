@@ -75,7 +75,10 @@ public:
 
   void checks(Property arr[]);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ec5171228541682e54fbdbb73b1c9e3b51dd4848
 
 };
 
@@ -457,7 +460,11 @@ int main(){
    me.roll(p);
    me.buyProperty(p); //refactor into roll so that property may be purchased upon rolling doubles
   cout << me.owned[0].name << endl;
+<<<<<<< HEAD
   me.checks(p);
+=======
+  me.checks();
+>>>>>>> ec5171228541682e54fbdbb73b1c9e3b51dd4848
 
 
 	return 0;
