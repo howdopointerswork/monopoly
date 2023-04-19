@@ -67,12 +67,15 @@ public:
 
   void checkJail();
 
+<<<<<<< HEAD
   void checkLT();
 
   void checkIT();
 
   void checks();
 
+=======
+>>>>>>> 8f710908e4e4949886628cc0f9d04042bc80a1bd
 
 };
 
@@ -197,9 +200,14 @@ void Player::setCash(int n){
 void Player::checkJail(){
 
 
+<<<<<<< HEAD
   if(pos == 30 || jail == 1){
 
     cout << "Go to jail!" << endl;
+=======
+  if(pos == 30){
+
+>>>>>>> 8f710908e4e4949886628cc0f9d04042bc80a1bd
     jail = true;
     
   }
@@ -210,6 +218,7 @@ void Player::checkJail(){
 
 
 
+<<<<<<< HEAD
 void Player::checkLT(){
 
 
@@ -300,6 +309,8 @@ void Player::checks(){
 }
 
 
+=======
+>>>>>>> 8f710908e4e4949886628cc0f9d04042bc80a1bd
 
 Property* makeProperty(Property* p, string n, int v, int r, int m){
 
