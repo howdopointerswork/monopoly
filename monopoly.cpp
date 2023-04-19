@@ -65,6 +65,14 @@ public:
 
   void buyProperty(Property arr[]);
 
+  void checkJail();
+
+  void checkLT();
+
+  void checkIT();
+
+  void checks();
+
 
 };
 
@@ -115,14 +123,18 @@ void Player::roll(Property arr[]){
 
 	cout << "Rolled a " << sum << ", with a " << d1 << " and a " << d2 << endl;
 	
-	if(hold > 39){ //fix
+	if(hold > 39){ 
 
-		int diff = hold - 39;
+		int diff = hold - 40; 
 		pos = diff; 
+    cash += 200; //Go
     
 	}
+  else{
 
 	pos += sum;
+
+  }
 
   cout << "You landed on: " << arr[pos].name << endl;
 
@@ -180,6 +192,112 @@ void Player::setCash(int n){
 }
 
 
+
+
+void Player::checkJail(){
+
+
+  if(pos == 30 || jail == 1){
+
+    cout << "Go to jail!" << endl;
+    jail = true;
+    
+  }
+
+  
+}
+
+
+
+
+void Player::checkLT(){
+
+
+  if(pos == 38){
+
+    cout << "Pay Luxury Tax of $75" << endl;
+    cash -= 75;
+
+    
+  }
+
+
+
+  
+}
+
+
+
+void Player::checkIT(){
+
+
+  //add lines for buildings
+
+  int subMtg;
+  int subVal;
+//  int subBui;
+  int sum;
+  int i = 0;
+  int tp;
+ 
+  if(pos == 4){
+
+    cout << "Pay Income Tax of the lesser of 10% of your worth or $200" << endl;
+    
+    while(owned[i].name != "None"){
+
+
+
+      subMtg += owned[i].mtg;
+      subVal += owned[i].val;
+ 
+      //subBui += number of buildings
+
+      
+    
+
+    
+    }
+
+    sum = subMtg + subVal + cash; //+subBui
+
+    tp = sum/10;
+
+
+    if(tp < 200){
+
+
+      cash -= tp;
+
+    
+    }
+    else{
+
+
+      cash -= 200;
+
+     
+    }
+
+  }
+}
+
+
+
+
+
+void Player::checks(){
+
+
+    checkJail();
+    checkLT();
+    checkIT();
+
+
+
+
+  
+}
 
 
 
@@ -278,6 +396,7 @@ int main(){
  me.roll(p);
  me.buyProperty(p); //refactor into roll so that property may be purchased upon rolling doubles
 cout << me.owned[0].name << endl;
+me.checks();
 
 
 	return 0;
