@@ -457,12 +457,9 @@ int main(){
    me.roll(p);
    me.buyProperty(p); //refactor into roll so that property may be purchased upon rolling doubles
   cout << me.owned[0].name << endl;
+<<<<<<< HEAD
 
   me.checks(p);
-
-  
- 
-
 
 	return 0;
   
