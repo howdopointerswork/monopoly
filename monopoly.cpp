@@ -71,7 +71,9 @@ public:
 
   void checkIT();
 
-  void checks();
+  void checkRent(Property arr[]); //first check owned array, then check if bool is owned in general. if so, pay
+
+  void checks(Property arr[]);
 
 
 
@@ -198,14 +200,10 @@ void Player::setCash(int n){
 void Player::checkJail(){
 
 
-<<<<<<< HEAD
   if(pos == 30 || jail == 1){
 
     cout << "Go to jail!" << endl;
-=======
-  if(pos == 30){
 
->>>>>>> 8f710908e4e4949886628cc0f9d04042bc80a1bd
     jail = true;
     
   }
@@ -216,7 +214,7 @@ void Player::checkJail(){
 
 
 
-<<<<<<< HEAD
+
 void Player::checkLT(){
 
 
@@ -292,13 +290,69 @@ void Player::checkIT(){
 
 
 
+void Player::checkRent(Property arr[]){
 
-void Player::checks(){
+  bool byYou;
+ 
+
+  for(int i=0; i<28; i++){
+
+
+    if(arr[pos].name != owned[i].name){
+
+      byYou = false;
+      
+    }
+
+    else{
+
+      byYou = true;
+      
+    }
+
+    
+  }
+
+  if(byYou){
+
+    return;
+    
+  }
+  else{
+
+
+    if(arr[pos].owned){
+
+      cash -= arr[pos].ren;
+      
+    }
+    else{
+
+      return;
+       
+    }
+
+    
+  }
+  
+
+
+  
+
+}
+
+
+
+
+
+
+void Player::checks(Property arr[]){
 
 
     checkJail();
     checkLT();
     checkIT();
+    checkRent(arr);
 
 
 
@@ -307,8 +361,6 @@ void Player::checks(){
 }
 
 
-=======
->>>>>>> 8f710908e4e4949886628cc0f9d04042bc80a1bd
 
 Property* makeProperty(Property* p, string n, int v, int r, int m){
 
@@ -402,10 +454,10 @@ int main(){
 
   
 
- me.roll(p);
- me.buyProperty(p); //refactor into roll so that property may be purchased upon rolling doubles
-cout << me.owned[0].name << endl;
-me.checks();
+   me.roll(p);
+   me.buyProperty(p); //refactor into roll so that property may be purchased upon rolling doubles
+  cout << me.owned[0].name << endl;
+  me.checks(p);
 
 
 	return 0;
