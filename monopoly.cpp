@@ -74,7 +74,6 @@ public:
   void checks();
 
 
-
 };
 
 
@@ -402,10 +401,10 @@ int main(){
 
   
 
- me.roll(p);
- me.buyProperty(p); //refactor into roll so that property may be purchased upon rolling doubles
-cout << me.owned[0].name << endl;
-me.checks();
+   me.roll(p);
+   me.buyProperty(p); //refactor into roll so that property may be purchased upon rolling doubles
+  cout << me.owned[0].name << endl;
+  me.checks();
 
 
 	return 0;
