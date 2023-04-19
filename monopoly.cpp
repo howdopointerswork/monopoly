@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-using namespace std;
+using namespace std; //fix
 using std::string;
 using std::cout;
 using std::cin;
