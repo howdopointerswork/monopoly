@@ -23,11 +23,13 @@ public:
 
 	int val;
 
-	bool owned = 0;
+	bool owned;
 
 	int ren; //rent
 
 	int mtg; //mortgage
+
+ 	Property();
 
 
 private:
@@ -51,33 +53,46 @@ public:
 
 	Property owned[28];
 
-	int doubleCount = 0;
+	int doubleCount;
 
 	Player();
 
 	void roll(Property arr[]);
 
-  void addCash(int n);
+  	void addCash(int n);
 
-  void remCash(int n);
+  	void remCash(int n);
 
-  void setCash(int n);
+ 	void setCash(int n);
 
-  void buyProperty(Property arr[]);
+  	void buyProperty(Property arr[]);
 
-  void checkJail();
+  	void checkJail();
 
-  void checkLT();
+  	void checkLT();
 
-  void checkIT();
+  	void checkIT();
 
-  void checkRent(Property arr[]); //first check owned array, then check if bool is owned in general. if so, pay
+  	void checkRent(Property arr[]); //first check owned array, then check if bool is owned in general. if so, pay
 
-  void checks(Property arr[]);
+  	void checks(Property arr[]);
 
 
 
-};
+	};
+
+
+
+ Property::Property(){
+
+
+
+  owned  = 0;
+  name = "None";
+
+
+
+}
 
 
 
@@ -90,6 +105,8 @@ Player::Player(){
 	pos = 0;
 
 	jail = 0;
+
+  doubleCount = 0;
 
 	name = "None";
 
@@ -118,26 +135,28 @@ void Player::roll(Property arr[]){
   }
 
 
-	int d1 = rand() % (6+1-1) + 1; 
-	int d2 = rand() % (6+1-1) + 1;
+  int d1 = rand() % (6+1-1) + 1; 
+  int d2 = rand() % (6+1-1) + 1;
 
-	int sum = d1+d2;
-	int hold = pos + sum;
+  int sum = d1+d2;
+  int hold = pos + sum;
 
-	cout << "Rolled a " << sum << ", with a " << d1 << " and a " << d2 << endl;
+  cout << "Rolled a " << sum << ", with a " << d1 << " and a " << d2 << endl;
 	
-	if(hold > 39){ 
+  if(hold > 39){ 
 
-		int diff = hold - 40; 
-		pos = diff; 
+    int diff = hold - 40; 
+    pos = diff; 
     cash += 200; //Go
     
-	}
+  }
   else{
 
-	pos += sum;
+    pos += sum;
 
   }
+
+  checks(arr);
 
   cout << "You landed on: " << arr[pos].name << endl;
 
@@ -362,25 +381,6 @@ void Player::checks(Property arr[]){
 
 
 
-Property* makeProperty(Property* p, string n, int v, int r, int m){
-
-
-	p->name = n;
-
-	p->val = v;
-
-	p->ren = r;
-
-	p->mtg = m;
-
-	return p;
-
-
-	
-}
-
-
-
 
 void Player::buyProperty(Property arr[]){
 
@@ -413,6 +413,40 @@ void Player::buyProperty(Property arr[]){
 
 
 
+/*void menu(Player arr[], int n){
+
+
+
+
+
+}*/
+
+
+
+Property* makeProperty(Property* p, string n, int v, int r, int m){
+
+
+	p->name = n;
+
+	p->val = v;
+
+	p->ren = r;
+
+	p->mtg = m;
+
+	return p;
+
+
+	
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -421,6 +455,16 @@ int main(){
 	srand(time(0));
 
 	Property board[40];
+
+  int pplPlaying;
+
+  int opt;
+
+  string name;
+
+  bool endGame;
+
+  int n = 0;
 
 	string boardNames[40] = {"Go", "Mediterranean Avenue", "Community Chest", "Baltic Avenue", "Income Tax", "Reading Railroad", "Oriental Avenue", "Chance", "Vermont Avenue", "Connecticut Avenue", "Jail", "St. Charles Place", "Electric Company", "States Avenue", "Virginia Avenue", "Pennsylvania Railroad", "St. James Place", "Community Chest", "Tennesse Avenue", "New York Avenue", "Free Parking", "Kentucky Avenue", "Chance", "Indiana Avenue", "Illinois Avenue", "B&O Railroad", "Atlantic Avenue", "Vermont Avenue", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific Avenue", "North Carolina Avenue", "Community Chest", "Pennsylvania Avenue", "Short Line Railroad", "Chance", "Park Place", "Luxury Tax", "Boardwalk"};
   
@@ -454,12 +498,108 @@ int main(){
 
   
 
-   me.roll(p);
+  /* me.roll(p);
    me.buyProperty(p); //refactor into roll so that property may be purchased upon rolling doubles
   cout << me.owned[0].name << endl;
 
 
-  me.checks(p);
+  me.checks(p);*/
+
+
+  cout << "Welcome to Monopoly! To begin, enter how many people will be playing" << endl;
+
+  cin >> pplPlaying;
+
+  cout << endl;
+
+  Player* game = new Player[pplPlaying];
+
+  cout << "Good. And what are their names? Starting with P1, and ending with Pn" << endl;
+
+
+  for(int i=0; i<pplPlaying; i++){
+
+
+    cin >> name;
+
+    cout << endl;
+
+    game[i].name = name;
+
+  }
+
+
+  cout << "Now that that is done, we may begin the game" << endl;
+
+
+
+  while( endGame == 0){
+
+
+    if(n == pplPlaying){
+
+
+      n = 0;
+
+    }
+
+
+    cout << "It is " << game[n].name << "'s turn" << endl;
+
+
+    cout << "1. Roll" << endl;
+
+    cout << "2. Buy" << endl;
+
+    cout << "3. End turn" << endl;
+
+
+    cin >> opt;
+
+    cout << endl;
+
+    if(opt == 1){
+
+      game[n].roll(p);
+      n++;
+
+
+    }
+    else if(opt == 2){
+
+
+      game[n].buyProperty(p);
+      n++;
+
+    }
+
+    else if(opt == 3){
+
+
+      n++;
+
+
+    }
+
+    else{
+
+
+      cout << "Invalid input" << endl;
+
+
+    }
+
+
+
+
+  }
+
+
+
+
+
+
+
 
 	return 0;
   
