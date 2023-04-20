@@ -278,7 +278,7 @@ void Player::checkIT(){
       //subBui += number of buildings
 
       
-    
+      i++;
 
     
     }
