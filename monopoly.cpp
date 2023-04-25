@@ -29,6 +29,12 @@ public:
 
 	int mtg; //mortgage
 
+  int hos; //houses
+
+  int hot; //hotels
+
+  bool isMortgaged;
+
  	Property();
 
 
@@ -63,7 +69,7 @@ public:
 
   	void remCash(int n);
 
- 	void setCash(int n);
+  	void setCash(int n);
 
   	void buyProperty(Property arr[]);
 
@@ -74,6 +80,8 @@ public:
   	void checkIT();
 
   	void checkRent(Property arr[]); //first check owned array, then check if bool is owned in general. if so, pay
+
+    void mortgage(Property arr[]);
 
   	void checks(Property arr[]);
 
@@ -278,7 +286,7 @@ void Player::checkIT(){
       //subBui += number of buildings
 
       
-    
+      i++;
 
     
     }
@@ -312,7 +320,8 @@ void Player::checkIT(){
 void Player::checkRent(Property arr[]){
 
   bool byYou;
- 
+
+  //give rent to player that owns it
 
   for(int i=0; i<28; i++){
 
@@ -340,7 +349,7 @@ void Player::checkRent(Property arr[]){
   else{
 
 
-    if(arr[pos].owned){
+    if(arr[pos].owned && arr[pos].isMortgaged == 0){
 
       cash -= arr[pos].ren;
       
@@ -360,6 +369,68 @@ void Player::checkRent(Property arr[]){
 
 }
 
+
+
+
+void Player::mortgage(Property arr[]){
+
+  int i = 0;
+
+  int j = 0;
+
+  int n;
+
+  int count = 0;
+
+  if(owned[0].name == "None"){
+
+    cout << "No properties to mortgage" << endl;
+    return;
+
+  }
+  else{
+
+    while(owned[i].name != "None"){
+
+      cout << i << ". " << owned[i].name << endl;
+     
+      i++;
+      
+    }
+
+    cout << "What would you like to mortgage or unmortgage?" << endl;
+    cin >> n;
+
+    if(n > i-1 || n<0){
+
+      cout << "Invalid input" << endl;
+      return;
+    }
+    else{
+
+      owned[n].isMortgaged = 1;
+      cash += owned[n].mtg;
+
+
+      while(arr[j].name != owned[n].name){
+
+
+        j++;
+
+      }
+
+      arr[j].isMortgaged = 1;
+      
+    }
+
+    
+    
+  }
+
+
+
+  
+}
 
 
 
@@ -397,6 +468,7 @@ void Player::buyProperty(Property arr[]){
        
     }
 
+    arr[pos].owned = 1;
     owned[i] = arr[pos];
     cash -= arr[pos].val;
     cout << "You purchased " << owned[i].name << " for " << owned[i].val << ". You now have " << cash << endl;
