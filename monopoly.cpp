@@ -67,7 +67,7 @@ public:
 
 	Player();
 
-	void roll(Property arr[]);
+	void roll(Property arr[], Player arr2[], int size);
 
   void addCash(int n);
 
@@ -83,13 +83,15 @@ public:
 
   void checkIT();
 
-  void checkRent(Property arr[]); //first check owned array, then check if bool is owned in general. If so, pay
+  void checkRent(Property arr[], Player arr2[], int size); //first check owned array, then check if bool is owned in general. If so, pay
 
   void checkLose();
 
+  void checkChanceCC(Property arr[]);
+
   void mortgage(Property arr[]);
 
-  void checks(Property arr[]);
+  void checks(Property arr[], Player arr2[], int size);
 
 
 
@@ -137,7 +139,7 @@ Player::Player(){
 
 
 
-void Player::roll(Property arr[]){
+void Player::roll(Property arr[], Player arr2[], int size){
 
 
   if(doubleCount == 3){
@@ -171,7 +173,7 @@ void Player::roll(Property arr[]){
 
   }
 
-  checks(arr);
+  checks(arr, arr2, size);
 
   cout << "You landed on: " << arr[pos].name << endl;
 
@@ -186,7 +188,7 @@ void Player::roll(Property arr[]){
 
   doubleCount++;
 
-  roll(arr);
+  roll(arr, arr2, size);
 
 
   
@@ -324,10 +326,11 @@ void Player::checkIT(){
 
 
 
-void Player::checkRent(Property arr[]){
+void Player::checkRent(Property arr[], Player arr2[], int size){
 
   bool byYou;
-
+  Player p; // convert to pointer same as others
+  
   //give rent to player that owns it
 
   for(int i=0; i<28; i++){
@@ -358,7 +361,30 @@ void Player::checkRent(Property arr[]){
 
     if(arr[pos].owned && arr[pos].isMortgaged == 0){
 
+      for(int i=0; i<size; i++){
+
+        for(int j=0; j<28; j++){
+
+
+          if(arr2[i].owned[j].name == arr[pos].name){
+
+            p = arr2[i];
+          }
+        }
+        
+      }
+
+      
+
+      
+  
+      
+
       cash -= arr[pos].ren;
+      p.cash += arr[pos].ren;
+        
+
+      
       
     }
     else{
@@ -493,13 +519,13 @@ void Player::mortgage(Property arr[]){
 
 
 
-void Player::checks(Property arr[]){
+void Player::checks(Property arr[], Player arr2[], int size){
 
 
     checkJail();
     checkLT();
     checkIT();
-    checkRent(arr);
+    checkRent(arr, arr2, size);
     checkLose();
 
   
@@ -634,7 +660,7 @@ int main(){
 
   cout << "Welcome to Monopoly! To begin, enter how many people will be playing" << endl;
 
-  cin >> pplPlaying;
+  cin >> pplPlaying; //must be valid range (1-6 maybe?)
 
   cout << endl;
 
@@ -659,7 +685,7 @@ int main(){
 
 
 
-  while( endGame == 0){
+ /* while( endGame == 0){
 
 
     if(n == pplPlaying){
@@ -718,7 +744,7 @@ int main(){
 
 
 
-  }
+  }*/
 
 
 
