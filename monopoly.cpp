@@ -21,6 +21,8 @@ public:
 
 	string name;
 
+  string colour;
+
 	int val;
 
 	bool owned;
@@ -55,6 +57,8 @@ public:
 
 	bool jail;
 
+  bool inGame;
+
 	string name;
 
 	Property owned[28];
@@ -65,25 +69,27 @@ public:
 
 	void roll(Property arr[]);
 
-  	void addCash(int n);
+  void addCash(int n);
 
-  	void remCash(int n);
+  void remCash(int n);
 
-  	void setCash(int n);
+  void setCash(int n);
 
-  	void buyProperty(Property arr[]);
+  void buyProperty(Property arr[]);
 
-  	void checkJail();
+  void checkJail();
 
-  	void checkLT();
+  void checkLT();
 
-  	void checkIT();
+  void checkIT();
 
-  	void checkRent(Property arr[]); //first check owned array, then check if bool is owned in general. if so, pay
+  void checkRent(Property arr[]); //first check owned array, then check if bool is owned in general. If so, pay
 
-    void mortgage(Property arr[]);
+  void checkLose();
 
-  	void checks(Property arr[]);
+  void mortgage(Property arr[]);
+
+  void checks(Property arr[]);
 
 
 
@@ -137,6 +143,7 @@ void Player::roll(Property arr[]){
   if(doubleCount == 3){
 
     jail = true;
+    //call jail function here
 
     return;
     
@@ -372,6 +379,32 @@ void Player::checkRent(Property arr[]){
 
 
 
+
+void Player::checkLose(){
+
+
+  if(cash <= 0){
+
+    inGame = 0;
+
+    
+  }
+
+  if(inGame == 0){
+
+    return;
+    //handle losses here
+
+    
+  }
+
+
+  
+}
+
+
+
+
 void Player::mortgage(Property arr[]){
 
   int i = 0;
@@ -408,18 +441,42 @@ void Player::mortgage(Property arr[]){
     }
     else{
 
-      owned[n].isMortgaged = 1;
-      cash += owned[n].mtg;
+      if(owned[n].isMortgaged == 0){
+
+        owned[n].isMortgaged = 1;
+        cash += owned[n].mtg;
 
 
-      while(arr[j].name != owned[n].name){
+        while(arr[j].name !=        owned[n].name){
 
 
-        j++;
+          j++;
 
+        }
+
+        arr[j].isMortgaged = 1;
+
+      }  
+      else{
+
+        owned[n].isMortgaged = 0;
+        cash -= owned[n].mtg;
+
+        
+        while(arr[j].name !=         owned[n].name){
+
+
+          j++;
+
+        }
+
+        arr[j].isMortgaged = 0;
+
+        
+        
       }
 
-      arr[j].isMortgaged = 1;
+      
       
     }
 
@@ -443,9 +500,7 @@ void Player::checks(Property arr[]){
     checkLT();
     checkIT();
     checkRent(arr);
-
-
-
+    checkLose();
 
   
 }
@@ -541,7 +596,6 @@ int main(){
 	string boardNames[40] = {"Go", "Mediterranean Avenue", "Community Chest", "Baltic Avenue", "Income Tax", "Reading Railroad", "Oriental Avenue", "Chance", "Vermont Avenue", "Connecticut Avenue", "Jail", "St. Charles Place", "Electric Company", "States Avenue", "Virginia Avenue", "Pennsylvania Railroad", "St. James Place", "Community Chest", "Tennesse Avenue", "New York Avenue", "Free Parking", "Kentucky Avenue", "Chance", "Indiana Avenue", "Illinois Avenue", "B&O Railroad", "Atlantic Avenue", "Vermont Avenue", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific Avenue", "North Carolina Avenue", "Community Chest", "Pennsylvania Avenue", "Short Line Railroad", "Chance", "Park Place", "Luxury Tax", "Boardwalk"};
   
   int boardCosts[40] = {-1, 60, -1, 60, -1, 200, 100, -1, 100, 120, -1, 140, 150, 140, 160, 200, 180, -1, 180, 200, -1, 220, -1, 220, 240, 200, 260, 260, 150, 280, -1, 300, 300, -1, 320, 200, -1, 350, -1, 400};
-  
   	
   int boardRents[40] = {-1, 2, -1, 4, -1, 50, 6, -1, 6, 8, -1, 10, 4, 10, 12, 50, 14, -1, 14, 16, -1, 18, -1, 18, 20, 50, 22, 22, 4, 24, -1, 26, 26, -1, 28, 50, -1, 35, -1, 50};
   
