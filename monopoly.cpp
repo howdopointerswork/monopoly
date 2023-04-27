@@ -110,7 +110,7 @@ public:
 
   void checkLose();
 
-  void checkChanceCC(Property arr[], Player arr2[], int size);
+  void checkChanceCC(Property arr[], Player arr2[], int size, Card toCheck);
 
   void mortgage(Property arr[]);
 
@@ -472,14 +472,21 @@ void Player::checkLose(){
 
 
 
-void checkChanceCC(Property arr[], Player arr2[], int size){
+void Player::checkChanceCC(Property arr[], Player arr2[], int size, Card toCheck){
 
 
-  
+  if(toCheck.id == 1){
+
+
+    pos = 0;
+    cash += 200;
+
+    
+
+  }
 
   //check id here with actual conditions
 
-  return;
 
 
   
