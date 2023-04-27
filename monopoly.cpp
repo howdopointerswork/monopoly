@@ -46,38 +46,59 @@ private:
 
 
 
+class Card{
+
+
+public:
+
+  int id;
+
+  string desc;
+
+
+
+
+
+};
+
+
+
 class Player{
 
 
 public: 
 
-	int cash;
+	int cash; //money
 
-	int pos;
+	int pos; //position
 
-	bool jail;
+	bool jail; //checks for player being in jail
 
-  bool inGame;
+  bool inGame; //checks if player is destitute
 
-	string name;
+  bool gjf; //get out of jail free
 
-	Property owned[28];
+	string name; //name of player
 
-	int doubleCount;
+	Property owned[28]; //properties owned
 
-	Player();
+	int doubleCount; //how many doubles you have rolled in a row
 
-	void roll(Property arr[], Player arr2[], int size);
+	Player(); //constructor
 
-  void addCash(int n);
+	void roll(Property arr[], Player arr2[], int size); //roll function - rolls 2 dice via randomizing ints and checks for doubles
 
-  void remCash(int n);
+  void addCash(int n); //adds cash, to be used soon
 
-  void setCash(int n);
+  void remCash(int n); //removes cash, to be used soon
 
-  void buyProperty(Property arr[]);
+  void setCash(int n); //sets the amount of cash you have
 
-  void checkJail();
+  void buyProperty(Property arr[]); //function to buy property
+
+//check functions
+
+  void checkJail(); 
 
   void checkLT();
 
@@ -103,8 +124,8 @@ public:
 
 
 
-  owned  = 0;
-  name = "None";
+  owned  = 0; //defaulted as vacant
+  name = "None"; //used for exclusions
 
 
 
@@ -116,20 +137,20 @@ public:
 Player::Player(){
 
 
-	cash = 1500;
+	cash = 1500; //starting cash
 
-	pos = 0;
+	pos = 0; //begin at Go
 
-	jail = 0;
+	jail = 0; //default not in jail
 
-  doubleCount = 0;
+  doubleCount = 0; //no doubles
 
-	name = "None";
+	name = "None"; //default name
 
-  for(int i=0; i<28; i++){
+  for(int i=0; i<28; i++){ 
 
     owned[i].name = "None";
-
+    //likely this loop will be removed - redundant
     
   }
 
@@ -140,6 +161,8 @@ Player::Player(){
 
 
 void Player::roll(Property arr[], Player arr2[], int size){
+
+  int n;
 
 
   if(doubleCount == 3){
@@ -188,7 +211,23 @@ void Player::roll(Property arr[], Player arr2[], int size){
 
   doubleCount++;
 
-  roll(arr, arr2, size);
+  cout << "Buy or keep rolling?" << endl << "1. Buy" << endl << "2. Roll" << endl;
+
+  cin >> n;
+
+  cout << endl;
+
+  if(n%2 == 0){
+  
+    roll(arr, arr2, size);
+
+  }
+  else{
+
+    buyProperty(arr);
+    roll(arr, arr2, size);
+    
+  }
 
 
   
@@ -628,6 +667,8 @@ int main(){
   
   int boardMortgages[40] = {-1, 30, -1, 30, -1, 100, 50, -1, 50, 60, -1, 70, 75, 70, 80, 100, 90, -1, 90, 100, -1, 110, -1, 110, 120, 100, 130, 130, 75, 140, -1, 150, 150, -1, 160, 100, -1, 175, -1, 200};
 
+  //string colours[40] = {}
+
   Property* p;
   Property* o;
 
@@ -641,7 +682,7 @@ int main(){
 	for(int i=0; i<40; i++){
 
 
-		p = makeProperty(p,boardNames[i], boardCosts[i], boardRents[i], boardMortgages[i]);
+		p = makeProperty(p,boardNames[i], boardCosts[i], boardRents[i], boardMortgages[i]); //add colours
 
 		p++;
 
