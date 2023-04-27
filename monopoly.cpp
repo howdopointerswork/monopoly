@@ -470,7 +470,7 @@ void Player::mortgage(Property arr[]){
       if(owned[n].isMortgaged == 0){
 
         owned[n].isMortgaged = 1;
-        cash += owned[n].mtg;
+        cash += (owned[n].mtg)/2;
 
 
         while(arr[j].name !=        owned[n].name){
@@ -487,6 +487,7 @@ void Player::mortgage(Property arr[]){
 
         owned[n].isMortgaged = 0;
         cash -= owned[n].mtg;
+        //and 10% on top
 
         
         while(arr[j].name !=         owned[n].name){
