@@ -5,12 +5,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stack>
 
 using namespace std; //fix
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
+using std::stack;
 
 
 
@@ -108,7 +110,7 @@ public:
 
   void checkLose();
 
-  void checkChanceCC(Property arr[]);
+  void checkChanceCC(Property arr[], Player arr2[], int size);
 
   void mortgage(Property arr[]);
 
@@ -462,6 +464,58 @@ void Player::checkLose(){
 
     
   }
+
+
+  
+}
+
+
+
+
+void checkChanceCC(Property arr[], Player arr2[], int size){
+
+
+  stack<Card> chance;
+  stack<Card> chest;
+
+
+  Card decks[32];
+
+  string descs[32] = {"Advance To Go (Collect $200)", "From Sale of Stock You Get $45", "You Inherit $100", "Pay Hospital $100", "Grand Opera Opening - Collect $50 From Every Player", "Income Tax Refund - Collect $20", "Receive For Services $20", "Doctor's Fee - Pay $50", "Go To Jail - Go Directly To Jail - Do Not Pass Go - Do Not Collect $200", "Bank Error In Your Favor - Collect $200", "Xmas Fund Matures - Collect $100", "Life Insurance Matures - $100", "Get Out Of Jail Free - This Card May Be Kept Until Needed Or Sold", "Pay School Tax Of $150", "You Have Won Second Prize In A Beauty Contest - Collect $10", "You Are Assessed For Street Repairs - $40 Per House, $115 Per Hotel", "Take A Ride On The Reading - If You Pass Go, Collect $200", "Advance Token To Nearest Utility - If Unowned, You May Buy It From The Bank - If Owned, Throw Dice And Pay Owner A Total Ten Times The Amount Thrown", "Go Back 3 Spaces", "Advance To Go (Collect $200)", "Bank Pays You Dividend Of $50", "Advance To Illinois Ave.", "Make General Repairs On All Your Property - For Each House Pay $25 - For Each Hotel Pay $100", "This Card May Be Kept Until Needed Or Sold - Get Out Of Jail Free", "Pay Poor Tax Of $15", "Take A Walk On The Boardwalk - Advance Token To Boardwalk", "Advance Token To The Nearest Railroad And Pay Owner Twice The Rental To Which He Is Entitled. If Railroad Is Unowned, You May Buy It From The Bank", "Go Directly To Jail - Do Not Pass Go - Do Not Collect $200", "You Have Been Elected Chairman Of The Board - Pay Each Player $50", "Advance To St.Charles Place - If You Pass Go, Collect $200", "Your Building And Loan Matures - Collect $150", "Advance Token To The Nearest Railroad And Pay Owner Twice The Rental To Which He Is Entitled. If Railroad Is Unowned, You May Buy It From The Bank"};
+
+for(int i=0; i<32; i++){
+
+
+
+  decks[i].desc = descs[i];
+  decks[i].id = i+1;
+
+
+  if(i<16){
+
+  chest.push(decks[i]);
+
+
+  }
+  else{
+
+    chance.push(decks[i]);
+    
+  }
+
+  //randomize then push
+  //just push for now however
+
+  
+
+  
+
+
+
+  
+}
+
+
 
 
   
