@@ -48,6 +48,8 @@ private:
 
 
 
+
+
 class Card{
 
 
@@ -62,6 +64,9 @@ public:
 
 
 };
+
+
+
 
 
 
@@ -85,6 +90,10 @@ public:
 	Property owned[28]; //properties owned
 
 	int doubleCount; //how many doubles you have rolled in a row
+
+  int houses;
+
+  int hotels;
 
 	Player(); //constructor
 
@@ -474,16 +483,179 @@ void Player::checkLose(){
 
 void Player::checkChanceCC(Property arr[], Player arr2[], int size, Card toCheck){
 
+  cout << toCheck.desc << endl;
+  
+  //make this not garbage
 
-  if(toCheck.id == 1){
+  
+  switch(toCheck.id){
 
+    case 1:
+      pos = 0;
+      addCash(200);
+      break;
 
-    pos = 0;
-    cash += 200;
+    case 2:
+      addCash(45);
+      break;
 
+    case 3:
+      addCash(100);
+      break;
+
+    case 4:
+      remCash(100);
+      break;
+
+    case 5:
+      for(int i=0; i<size; i++){
+
+        arr2[i].remCash(50);
+        addCash(50);
+        
+      }
+      break;
+
+    case 6: 
+      addCash(20);
+      break;
+
+    case 7:
+      addCash(20);
+      break;
+
+    case 8:
+      remCash(50);
+      break;
+
+    case 9:
+      jail = 1; //will handle jail later
+      break;
+
+    case 10:
+      addCash(200);
+      break;
+
+    case 11:
+      addCash(100);
+      break;
+
+    case 12:
+      addCash(100);
+      break;
+
+    case 13:
+      gjf = 1;
+      break;
+
+    case 14:
+      remCash(150);
+      break;
+
+    case 15:
+      addCash(10);
+      break;
+
+    case 16:
+      addCash(45*houses);
+      addCash(115*hotels);
+      break;
+      
+
+    case 17:
+      if(pos >= 5){
+
+        addCash(200);
+        
+      }
+      pos = 5;
+      break;
+
+    case 18:
+      cout << "WIP" << endl; //12, 28
+      break;
+
+    case 19:
+      pos -= 3;
+      break;
+
+    case 20:
+      pos = 0;
+      addCash(200);
+      break;
+
+    case 21:
+      addCash(50);
+      break;
+
+    case 22:
+      if(pos >= 24){
+
+        addCash(200);
+        
+      }
+      pos = 24;
+      break;
+
+    case 23:
+      remCash(25*houses);
+      remCash(100*hotels);
+      break;
+
+    case 24:
+      gjf = 1;
+      break;
+
+    case 25:
+      remCash(15);
+      break;
+
+    case 26:
+      if(pos == 39){
+
+        addCash(200);
+        
+      }
+      pos = 39;
+      break;
+
+    case 27:
+      cout << "WIP" << endl; //must do rents first
+      break;
+
+    case 28:
+      jail = 1;
+      break;
+
+    case 29:
+      for(int i=0; i<size; i++){
+
+        arr2[i].addCash(50);
+        remCash(50);
+         
+      }
+      break;
+
+    case 30:
+      if(pos >= 11){
+
+        addCash(200);
+        
+      }
+      pos = 11;
+      break;
+
+    case 31:
+      addCash(150);
+      break;
+
+    case 32:
+      cout << "WIP" << endl; //rents first
+      break;
+      
     
-
   }
+  
 
   //check id here with actual conditions
 
@@ -599,6 +771,7 @@ void Player::checks(Property arr[], Player arr2[], int size){
 
 
 
+
 void Player::buyProperty(Property arr[]){
 
 
@@ -641,7 +814,7 @@ void Player::buyProperty(Property arr[]){
 
 
 
-Property* makeProperty(Property* p, string n, int v, int r, int m){
+Property* makeProperty(Property* p, string n, int v, int r, int m, string c){
 
 
 	p->name = n;
@@ -651,6 +824,8 @@ Property* makeProperty(Property* p, string n, int v, int r, int m){
 	p->ren = r;
 
 	p->mtg = m;
+
+  p->colour = c;
 
 	return p;
 
@@ -692,6 +867,7 @@ int main(){
 
   Card decks[32];
 
+  //put in txt file
   string descs[32] = {"Advance To Go (Collect $200)", "From Sale of Stock You Get $45", "You Inherit $100", "Pay Hospital $100", "Grand Opera Opening - Collect $50 From Every Player", "Income Tax Refund - Collect $20", "Receive For Services $20", "Doctor's Fee - Pay $50", "Go To Jail - Go Directly To Jail - Do Not Pass Go - Do Not Collect $200", "Bank Error In Your Favor - Collect $200", "Xmas Fund Matures - Collect $100", "Life Insurance Matures - $100", "Get Out Of Jail Free - This Card May Be Kept Until Needed Or Sold", "Pay School Tax Of $150", "You Have Won Second Prize In A Beauty Contest - Collect $10", "You Are Assessed For Street Repairs - $40 Per House, $115 Per Hotel", "Take A Ride On The Reading - If You Pass Go, Collect $200", "Advance Token To Nearest Utility - If Unowned, You May Buy It From The Bank - If Owned, Throw Dice And Pay Owner A Total Ten Times The Amount Thrown", "Go Back 3 Spaces", "Advance To Go (Collect $200)", "Bank Pays You Dividend Of $50", "Advance To Illinois Ave.", "Make General Repairs On All Your Property - For Each House Pay $25 - For Each Hotel Pay $100", "This Card May Be Kept Until Needed Or Sold - Get Out Of Jail Free", "Pay Poor Tax Of $15", "Take A Walk On The Boardwalk - Advance Token To Boardwalk", "Advance Token To The Nearest Railroad And Pay Owner Twice The Rental To Which He Is Entitled. If Railroad Is Unowned, You May Buy It From The Bank", "Go Directly To Jail - Do Not Pass Go - Do Not Collect $200", "You Have Been Elected Chairman Of The Board - Pay Each Player $50", "Advance To St.Charles Place - If You Pass Go, Collect $200", "Your Building And Loan Matures - Collect $150", "Advance Token To The Nearest Railroad And Pay Owner Twice The Rental To Which He Is Entitled. If Railroad Is Unowned, You May Buy It From The Bank"};
 
   for(int i=0; i<32; i++){
@@ -718,7 +894,7 @@ int main(){
   //just push for now however
 
   }
-  
+  //put in txt file
 	string boardNames[40] = {"Go", "Mediterranean Avenue", "Community Chest", "Baltic Avenue", "Income Tax", "Reading Railroad", "Oriental Avenue", "Chance", "Vermont Avenue", "Connecticut Avenue", "Jail", "St. Charles Place", "Electric Company", "States Avenue", "Virginia Avenue", "Pennsylvania Railroad", "St. James Place", "Community Chest", "Tennesse Avenue", "New York Avenue", "Free Parking", "Kentucky Avenue", "Chance", "Indiana Avenue", "Illinois Avenue", "B&O Railroad", "Atlantic Avenue", "Vermont Avenue", "Water Works", "Marvin Gardens", "Go To Jail", "Pacific Avenue", "North Carolina Avenue", "Community Chest", "Pennsylvania Avenue", "Short Line Railroad", "Chance", "Park Place", "Luxury Tax", "Boardwalk"};
   
   int boardCosts[40] = {-1, 60, -1, 60, -1, 200, 100, -1, 100, 120, -1, 140, 150, 140, 160, 200, 180, -1, 180, 200, -1, 220, -1, 220, 240, 200, 260, 260, 150, 280, -1, 300, 300, -1, 320, 200, -1, 350, -1, 400};
@@ -726,6 +902,8 @@ int main(){
   int boardRents[40] = {-1, 2, -1, 4, -1, 50, 6, -1, 6, 8, -1, 10, 4, 10, 12, 50, 14, -1, 14, 16, -1, 18, -1, 18, 20, 50, 22, 22, 4, 24, -1, 26, 26, -1, 28, 50, -1, 35, -1, 50};
   
   int boardMortgages[40] = {-1, 30, -1, 30, -1, 100, 50, -1, 50, 60, -1, 70, 75, 70, 80, 100, 90, -1, 90, 100, -1, 110, -1, 110, 120, 100, 130, 130, 75, 140, -1, 150, 150, -1, 160, 100, -1, 175, -1, 200};
+
+  string boardColours[40] = {"None", "Purple", "None", "Purple", "None", "Railroad", "LightBlue", "None", "LightBlue", "LightBlue", "None", "Pink", "Utility", "Pink", "Pink", "Railroad", "Orange", "None", "Orange", "Orange", "None", "Red", "None", "Red", "Red", "Railroad", "Yellow", "Yellow", "Utility", "Yellow", "None", "Green", "Green", "None", "Green", "Railroad", "None", "Blue", "None", "Blue"};
 
   //string colours[40] = {}
 
@@ -742,7 +920,7 @@ int main(){
 	for(int i=0; i<40; i++){
 
 
-		p = makeProperty(p,boardNames[i], boardCosts[i], boardRents[i], boardMortgages[i]); //add colours
+		p = makeProperty(p,boardNames[i], boardCosts[i], boardRents[i], boardMortgages[i], boardColours[i]); //add colours
 
 		p++;
 
