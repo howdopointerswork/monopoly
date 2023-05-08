@@ -91,13 +91,15 @@ public:
 
 	int doubleCount; //how many doubles you have rolled in a row
 
+  int jailCount; 
+
   int houses;
 
   int hotels;
 
 	Player(); //constructor
 
-	void roll(Property arr[], Player arr2[], int size); //roll function - rolls 2 dice via randomizing ints and checks for doubles
+	void roll(Property arr[], Player arr2[], int size, Card toCheck, stack<Card> ch, stack<Card> cc); //roll function - rolls 2 dice via randomizing ints and checks for doubles
 
   void addCash(int n); //adds cash, to be used soon
 
@@ -119,11 +121,11 @@ public:
 
   void checkLose();
 
-  void checkChanceCC(Property arr[], Player arr2[], int size, Card toCheck);
+  void checkChanceCC(Property arr[], Player arr2[], int size, Card toCheck, stack<Card> ch, stack<Card> cc);
 
   void mortgage(Property arr[]);
 
-  void checks(Property arr[], Player arr2[], int size);
+  void checks(Property arr[], Player arr2[], int size, Card toCheck, stack<Card> ch, stack<Card> cc);
 
 
 
@@ -171,7 +173,7 @@ Player::Player(){
 
 
 
-void Player::roll(Property arr[], Player arr2[], int size){
+void Player::roll(Property arr[], Player arr2[], int size, Card toCheck, stack<Card> ch, stack<Card> cc){
 
   int n;
 
@@ -207,7 +209,7 @@ void Player::roll(Property arr[], Player arr2[], int size){
 
   }
 
-  checks(arr, arr2, size);
+  checks(arr, arr2, size, toCheck, ch, cc);
 
   cout << "You landed on: " << arr[pos].name << endl;
 
@@ -230,13 +232,13 @@ void Player::roll(Property arr[], Player arr2[], int size){
 
   if(n%2 == 0){
   
-    roll(arr, arr2, size);
+    roll(arr, arr2, size, toCheck, ch, cc);
 
   }
   else{
 
     buyProperty(arr);
-    roll(arr, arr2, size);
+    roll(arr, arr2, size, toCheck, ch, cc);
     
   }
 
@@ -291,6 +293,12 @@ void Player::checkJail(){
     cout << "Go to jail!" << endl;
 
     jail = true;
+    
+  }
+
+  if(jail){
+
+    return; //add jail rules here
     
   }
 
@@ -481,11 +489,30 @@ void Player::checkLose(){
 
 
 
-void Player::checkChanceCC(Property arr[], Player arr2[], int size, Card toCheck){
+void Player::checkChanceCC(Property arr[], Player arr2[], int size, Card toCheck, stack<Card> ch, stack<Card> cc){
 
+
+  Card temp;
+   
   cout << toCheck.desc << endl;
+
+  
   
   //make this not garbage
+
+  if(toCheck.id < 16){
+
+    ch.pop();
+    ch.push(toCheck);
+
+    
+  }
+  else{
+
+    cc.pop();
+    cc.push(toCheck);
+    
+  }
 
   
   switch(toCheck.id){
@@ -756,7 +783,7 @@ void Player::mortgage(Property arr[]){
 
 
 
-void Player::checks(Property arr[], Player arr2[], int size){
+void Player::checks(Property arr[], Player arr2[], int size, Card toCheck, stack<Card> ch, stack<Card> cc){
 
 
     checkJail();
@@ -764,6 +791,21 @@ void Player::checks(Property arr[], Player arr2[], int size){
     checkIT();
     checkRent(arr, arr2, size);
     checkLose();
+
+    if(pos == 7 || pos == 22 || pos == 36){
+
+       checkChanceCC(arr, arr2, size, ch.top(), ch, cc);
+
+      
+    }
+    else if(pos == 2 || pos == 17 || pos == 24){
+
+
+             checkChanceCC(arr, arr2, size, cc.top(), ch, cc);
+
+
+      
+    }
 
   
 }
@@ -845,6 +887,8 @@ Property* makeProperty(Property* p, string n, int v, int r, int m, string c){
 
 int main(){
 
+  //organize - variables first, then arrays, then code
+
 	srand(time(0));
 
 	Property board[40];
@@ -859,6 +903,8 @@ int main(){
 
   int n = 0;
 
+  Card empty;
+  empty.id = 0;
 
   //put in main up to after else
   stack<Card> chance;
@@ -964,8 +1010,10 @@ int main(){
   cout << "Now that that is done, we may begin the game" << endl;
 
 
+  
 
- /* while( endGame == 0){
+
+  while( endGame == 0){
 
 
     if(n == pplPlaying){
@@ -992,8 +1040,23 @@ int main(){
 
     if(opt == 1){
 
-      game[n].roll(p);
+      if(game[n].pos == 7 || game[n].pos == 22 || game[n].pos == 36){
+        game[n].roll(p, game, pplPlaying, chance.top(), chance, chest);
       n++;
+
+      }
+      else if(game[n].pos == 2 || game[n].pos == 17 || game[n].pos == 24){
+
+        game[n].roll(p, game, pplPlaying, chest.top(), chance, chest);
+      n++;
+        
+      }
+      else{
+
+        game[n].roll(p, game, pplPlaying, empty, chance, chest);
+      n++;
+        
+      }
 
 
     }
@@ -1024,7 +1087,7 @@ int main(){
 
 
 
-  }*/
+  }
 
 
 
