@@ -127,6 +127,8 @@ public:
 
   void checks(Property arr[], Player arr2[], int size, Card toCheck, stack<Card> ch, stack<Card> cc);
 
+  void trade(Player t);
+
 
 
 	};
@@ -249,6 +251,192 @@ void Player::roll(Property arr[], Player arr2[], int size, Card toCheck, stack<C
 
 
 
+}
+
+
+
+
+void Player::trade(Player t){
+
+
+  int givP;
+  int givC;
+  int reqP;
+  int reqC;
+  int i = 0;
+  int opt;
+  
+
+  cout << "To begin the trade, select what you are going to offer. First, enter the amount of properties you wish to trade, and then enter the amount of cash that you wish to trade. Then, do the same with what you wish to receive in return." << endl << endl << endl;
+
+
+  cout << "Properties to give: ";
+
+  cin >> givP;
+
+  cout << endl;
+  
+  cout << "Cash to give: ";
+
+  cin >> givC;
+
+  cout << endl;
+
+
+//do requests here
+
+  
+  cout << "Properties to get: ";
+
+  cin >> reqP;
+
+  cout << endl;
+  
+  cout << "Cash to get: ";
+
+  cin >> reqC;
+
+  cout << endl;
+
+
+
+  cout << "Now choose which Properties to give by inputting a legal number from the list below: " << endl;
+
+
+  //while loop with the properties listed
+  //a dynamic array of size givP to hold the selected properties
+  //for loop of givP to enter numbers for properties to select
+  //In for loop, put each int, after assignment, into array
+  //another while loop to list tradee properties
+  //a dynamic array of size givC to hold the requested properties
+  //for loop of givC to enter numbers for properties to select
+  //In for loop, put each int, after assignment, into array
+
+  //do cash: += to give, += to get 
+
+  Property temp;
+
+
+  while(owned[i].name != "None"){
+
+
+    cout << i << ". " << owned[i].name << endl;
+
+    i++;
+
+    
+    
+
+    
+  }
+  
+  
+  i = 0;
+
+ 
+
+  for(int j = 0; j < givP; j++){
+
+
+      cin >> opt;
+      cout << endl;
+
+      temp = owned[opt];
+      
+
+      while(t.owned[i].name != "None"){
+
+
+        i++;
+
+        
+      }
+
+      t.owned[i] = temp;
+      i = 0;
+
+      for(int k = 0; k < 28; k++){
+
+
+        owned[k] = owned[k+1];
+
+        
+      }
+      
+         
+
+    
+  }
+
+
+ cout << "Now choose which Properties to receive by inputting a legal number from the list below: " << endl;
+
+
+  while(t.owned[i].name != "None"){
+
+
+    cout << i << ". " << t.owned[i].name << endl;
+
+    i++;
+
+
+    
+  }
+
+
+  i = 0;
+
+
+
+  for(int j = 0; j < reqP; j++){
+
+
+      cin >> opt;
+      cout << endl;
+
+      temp = t.owned[opt];
+      
+
+      while(owned[i].name != "None"){
+
+
+        i++;
+
+        
+      }
+
+      owned[i] = temp;
+      i = 0;
+
+      for(int k = 0; k < 28; k++){
+
+
+        t.owned[k] = t.owned[k+1];
+
+        
+      }
+      
+         
+
+    
+  }
+
+
+  
+  
+  
+  addCash(reqC);
+  t.addCash(givC);
+
+
+  
+  //do trading here
+
+
+  
+
+
+  
 }
 
 
@@ -616,6 +804,7 @@ void Player::checkChanceCC(Property arr[], Player arr2[], int size, Card toCheck
       break;
 
     case 22:
+      
       if(pos >= 24){
 
         addCash(200);
@@ -736,7 +925,7 @@ void Player::mortgage(Property arr[]){
         cash += (owned[n].mtg)/2;
 
 
-        while(arr[j].name !=        owned[n].name){
+        while(arr[j].name != owned[n].name){
 
 
           j++;
