@@ -97,6 +97,10 @@ public:
 
   int hotels;
 
+  int ut = 4; //for utilities
+
+  int rr = 1; //for railroads
+
 	Player(); //constructor
 
 	void roll(Property arr[], Player arr2[], int size, Card toCheck, stack<Card> ch, stack<Card> cc); //roll function - rolls 2 dice via randomizing ints and checks for doubles
@@ -123,11 +127,15 @@ public:
 
   void checkChanceCC(Property arr[], Player arr2[], int size, Card toCheck, stack<Card> ch, stack<Card> cc);
 
+  void checkRentDbl();
+
   void mortgage(Property arr[]);
 
   void checks(Property arr[], Player arr2[], int size, Card toCheck, stack<Card> ch, stack<Card> cc);
 
   void trade(Player t);
+
+  int easyRoll();
 
 
 
@@ -255,6 +263,23 @@ void Player::roll(Property arr[], Player arr2[], int size, Card toCheck, stack<C
 
 
 
+int Player::easyRoll(){
+
+  int d1 = rand() % (6+1-1) + 1; 
+  int d2 = rand() % (6+1-1) + 1;
+
+  int sum = d1+d2;
+
+  cout << "Rolled a: " << d1 << " and a: " << d2 << " for a sum of: " << sum << endl;
+
+
+  return sum;
+
+  
+}
+
+
+
 
 void Player::trade(Player t){
 
@@ -356,7 +381,7 @@ void Player::trade(Player t){
       i = 0;
 
       for(int k = 0; k < 28; k++){
-
+      //make these while loops
 
         owned[k] = owned[k+1];
 
@@ -430,11 +455,6 @@ void Player::trade(Player t){
 
 
   
-  //do trading here
-
-
-  
-
 
   
 }
@@ -624,10 +644,26 @@ void Player::checkRent(Property arr[], Player arr2[], int size){
 
       
   
-      
+      if(arr[pos].colour == "Utility"){
 
-      cash -= arr[pos].ren;
-      p.cash += arr[pos].ren;
+        int hold = easyRoll()*4;
+
+        remCash(hold);
+        p.addCash(hold);
+        
+      }
+      else if(arr[pos].colour == "Railroad"){
+
+        remCash(50*rr);
+        p.addCash(50*rr);
+        
+      }
+      else{
+
+      remCash(arr[pos].ren);
+      p.addCash(arr[pos].ren);
+
+      }
         
 
       
@@ -669,6 +705,117 @@ void Player::checkLose(){
 
     
   }
+
+
+  
+}
+
+
+
+void Player::checkRentDbl(){
+
+
+
+  int clrCount;
+
+  int j = 0;
+  int k = 0;
+
+  int arr[4] = {0, 0, 0, 0};
+
+
+//purple: 2  blue: 2  utilities: 2
+//railroads: 4  
+//everything else is 3
+
+
+  string clr[11] = {"Purple", "Railroad", "LightBlue", "Pink", "Utility", "Orange", "Red", "Yellow", "Green", "Railroad", "Blue"}; 
+
+  
+
+
+ for(int i=0; i<11; i++){
+
+    while(owned[j].name != "None"){
+
+      if(owned[j].colour == clr[i]){
+
+        clrCount++;
+        arr[k] = j;
+        k++;
+        
+        
+      }//if
+
+      j++;
+      
+    }//while
+
+   
+    switch(clrCount){
+
+      case 2:
+
+        if(i == 0 || i == 10){
+
+            for(int l=0; l<2; l++){
+
+              owned[arr[l]].ren *= 2;
+              
+            } 
+          
+        }
+        else if(i == 4){
+
+          //utilities
+          ut = 10;
+          
+        }
+        else if(i == 1){
+
+          rr = 2;
+        }
+
+        break;
+
+     
+      case 3:
+
+        if(i == 1){
+
+          rr = 3;
+          
+        }
+        else{
+
+          for(int l=0; l<3; l++){
+
+            owned[arr[l]].ren *= 2;
+          }
+          
+        }
+        break;
+
+      
+      
+      case 4:
+
+        rr = 4;
+        break;
+        
+
+      
+    }
+   
+
+
+
+   j = 0;
+   k = 0;
+  
+   
+   
+ }//for
 
 
   
